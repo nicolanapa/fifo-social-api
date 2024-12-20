@@ -8,7 +8,7 @@ const SQL_PUBLIC = `
 
     CREATE TABLE IF NOT EXISTS user_info (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        user_id REFERENCES user_account(id),
+        user_id INTEGER REFERENCES user_account(id),
         description TEXT,
         account_creation_date TIMESTAMP WITH TIME ZONE,
         admin BOOLEAN DEFAULT(false)
@@ -16,7 +16,7 @@ const SQL_PUBLIC = `
 
     CREATE TABLE IF NOT EXISTS post (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        user_id REFERENCES user_account(id),
+        user_id INTEGER REFERENCES user_account(id),
         title TEXT,
         content TEXT,
         likes INTEGER DEFAULT(0),
@@ -25,8 +25,8 @@ const SQL_PUBLIC = `
 
     CREATE TABLE IF NOT EXISTS comment (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        post_id REFERENCES post(id),
-        content TEST,
+        post_id INTEGER REFERENCES post(id),
+        content TEXT,
         likes INTEGER DEFAULT(0)
     );
 `;
