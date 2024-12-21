@@ -1,6 +1,5 @@
 {
     "tabWidth": 4,
     "printWidth": 100,
-    "endOfLine": "crlf",
-    "plugins": ["prettier-plugin-ejs"]
+    "endOfLine": "crlf"
 }
