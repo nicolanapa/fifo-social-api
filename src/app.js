@@ -4,7 +4,7 @@ import url from "url";
 import path from "path";
 import session from "express-session";
 import passport from "passport";
-import { userRouter } from "./routes/userRouter";
+import { userRouter } from "./routes/userRouter.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
