@@ -46,6 +46,58 @@ async function postUser(username, description) {
     );
 }
 
+async function deleteUser(id) {
+    await publicTable.query(
+        `
+        DELETE FROM post_like
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        DELETE FROM comment_like
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        DELETE FROM user_info
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        DELETE FROM user_account
+        WHERE id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        UPDATE post
+        SET user_id = -1
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        UPDATE comment
+        SET user_id = -1
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+}
+
 async function getUsers() {
     const { rows } = await publicTable.query(`
         SELECT * FROM user_account
@@ -56,4 +108,4 @@ async function getUsers() {
     return rows;
 }
 
-export { getUser, getUsername, postUser, getUsers };
+export { getUser, getUsername, postUser, deleteUser, getUsers };
