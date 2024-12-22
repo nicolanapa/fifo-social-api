@@ -2,6 +2,10 @@ import { validationResult } from "express-validator";
 import * as userQueries from "../db/queries/user.js";
 
 class UserController {
+    async getUsers(req, res) {
+        res.status(200).json(await userQueries.getUsers());
+    }
+
     async getUser(req, res) {
         res.status(200).json(await userQueries.getUser(req.params.id));
     }
@@ -20,10 +24,6 @@ class UserController {
         } catch {
             return res.status(400).json({ success: false, password: "" });
         }
-    }
-
-    async getUsers(req, res) {
-        res.status(200).json(await userQueries.getUsers());
     }
 
     async deleteUser(req, res) {
