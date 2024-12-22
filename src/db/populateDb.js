@@ -19,15 +19,25 @@ const SQL_PUBLIC = `
         user_id INTEGER REFERENCES user_account(id),
         title TEXT,
         content TEXT,
-        likes INTEGER DEFAULT(0),
         creation_date TIMESTAMP WITH TIME ZONE
+    );
+
+    CREATE TABLE IF NOT EXISTS post_like (
+        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        post_id INTEGER REFERENCES post(id),
+        user_id INTEGER REFERENCES user_account(id)
     );
 
     CREATE TABLE IF NOT EXISTS comment (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         post_id INTEGER REFERENCES post(id),
-        content TEXT,
-        likes INTEGER DEFAULT(0)
+        content TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS comment_like (
+        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        comment_id INTEGER REFERENCES comment(id),
+        user_id INTEGER REFERENCES user_account(id)
     );
 `;
 
