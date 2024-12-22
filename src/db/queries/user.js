@@ -47,7 +47,11 @@ async function postUser(username, description) {
 }
 
 async function getUsers() {
-    const { rows } = await publicTable.query("SELECT * FROM user_account;");
+    const { rows } = await publicTable.query(`
+        SELECT * FROM user_account
+        INNER JOIN user_info
+        ON user_account.id = user_info.user_id;
+        `);
 
     return rows;
 }
