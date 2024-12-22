@@ -31,6 +31,7 @@ const SQL_PUBLIC = `
     CREATE TABLE IF NOT EXISTS comment (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         post_id INTEGER REFERENCES post(id),
+        user_id INTEGER REFERENCES user_account(id),
         content TEXT
     );
 
