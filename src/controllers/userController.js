@@ -13,9 +13,13 @@ class UserController {
             return res.status(400).json(errors.array());
         }
 
-        await userQueries.postUser(req.body.username, req.body.description);
+        try {
+            await userQueries.postUser(req.body.username, req.body.description);
 
-        return res.status(201).json({ success: true, password: "" });
+            return res.status(201).json({ success: true, password: "" });
+        } catch {
+            return res.status(400).json({ success: false, password: "" });
+        }
     }
 
     async getUsers(req, res) {
