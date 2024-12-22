@@ -8,7 +8,8 @@ const userValidator = [
         .escape()
         .notEmpty()
         .withMessage("Username mustn't be empty")
-        .isLength({ min: 1, max: 64 }),
+        .isLength({ min: 1, max: 64 })
+        .withMessage("Username must be between 1 and 64 characters length"),
     body("description")
         .trim()
         .optional()
