@@ -13,7 +13,9 @@ class UserController {
             return res.status(400).json(errors.array());
         }
 
-        return res.status(201).send(true);
+        await userQueries.postUser(req.body.username, req.body.description);
+
+        return res.status(201).json({ success: true, password: "" });
     }
 
     async getUsers(req, res) {
