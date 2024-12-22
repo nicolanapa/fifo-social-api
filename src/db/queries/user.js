@@ -1,4 +1,4 @@
-import { publicTable } from "../pool.js";
+import { publicTable, privateTable } from "../pool.js";
 
 async function getUser(id) {
     const { rows } = await publicTable.query(
@@ -44,6 +44,8 @@ async function postUser(username, description) {
         `,
         [username, description],
     );
+
+    // Add username and password to the private DB
 }
 
 async function deleteUser(id) {
@@ -93,6 +95,14 @@ async function deleteUser(id) {
         UPDATE comment
         SET user_id = -1
         WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await privateTable.query(
+        `
+        DELETE FROM user_password
+        WHERE id = $1;
         `,
         [id],
     );

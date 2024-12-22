@@ -19,6 +19,7 @@ class UserController {
 
         try {
             await userQueries.postUser(req.body.username, req.body.description);
+            // Fetch the private db with the generated password
 
             return res.status(201).json({ success: true, password: "" });
         } catch {
