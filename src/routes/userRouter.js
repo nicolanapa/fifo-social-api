@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userController from "../controllers/userController.js";
 import { body } from "express-validator";
+import { checkIfUserAlreadyExists } from "../controllers/customValidatorController.js";
 
 const userValidator = [
     body("username")
@@ -9,7 +10,8 @@ const userValidator = [
         .notEmpty()
         .withMessage("Username mustn't be empty")
         .isLength({ min: 1, max: 64 })
-        .withMessage("Username must be between 1 and 64 characters length"),
+        .withMessage("Username must be between 1 and 64 characters length")
+        .custom(checkIfUserAlreadyExists),
     body("description")
         .trim()
         .optional()
