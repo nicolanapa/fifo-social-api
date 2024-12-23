@@ -59,4 +59,17 @@ async function deletePost(id) {
     );
 }
 
-export { getPosts, getPost, deletePost };
+async function getAllComments(id) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT *, (SELECT COUNT(comment_id) AS likes FROM comment_like WHERE comment_like.comment_id = comment.id) 
+        FROM comment 
+        WHERE post_id = $1;
+        `,
+        [id],
+    );
+
+    return rows;
+}
+
+export { getPosts, getPost, deletePost, getAllComments };

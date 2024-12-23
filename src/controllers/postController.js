@@ -27,7 +27,9 @@ class PostController {
         return res.status(401).json({ success: false, msg: "Not authenticated" });
     }
 
-    async getAllComments(req, res) {}
+    async getAllComments(req, res) {
+        res.status(200).json(await postQueries.getAllComments(req.params.id));
+    }
 }
 
 export default new PostController();
