@@ -1,5 +1,15 @@
 import { publicTable, privateTable } from "../pool.js";
 
+async function getUsers() {
+    const { rows } = await publicTable.query(`
+        SELECT * FROM user_account
+        INNER JOIN user_info
+        ON user_account.id = user_info.user_id;
+        `);
+
+    return rows;
+}
+
 async function getUser(id) {
     const { rows } = await publicTable.query(
         `
@@ -108,14 +118,4 @@ async function deleteUser(id) {
     );
 }
 
-async function getUsers() {
-    const { rows } = await publicTable.query(`
-        SELECT * FROM user_account
-        INNER JOIN user_info
-        ON user_account.id = user_info.user_id;
-        `);
-
-    return rows;
-}
-
-export { getUser, getUsername, postUser, deleteUser, getUsers };
+export { getUsers, getUser, getUsername, postUser, deleteUser };
