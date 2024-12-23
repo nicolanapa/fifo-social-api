@@ -25,7 +25,7 @@ async function getPost(id) {
     return rows;
 }
 
-async function deletePost(id, userId) {
+async function deletePost(id) {
     await publicTable.query(
         `
         DELETE FROM post_like
@@ -36,11 +36,10 @@ async function deletePost(id, userId) {
 
     await publicTable.query(
         `
-        UPDATE post
-        SET user_id = -1
-        WHERE user_id = $1;
+        DELETE post
+        WHERE id = $1;
         `,
-        [userId],
+        [id],
     );
 }
 

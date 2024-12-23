@@ -93,8 +93,7 @@ async function deleteUser(id) {
 
     await publicTable.query(
         `
-        UPDATE post
-        SET user_id = -1
+        DELETE post
         WHERE user_id = $1;
         `,
         [id],
@@ -102,8 +101,7 @@ async function deleteUser(id) {
 
     await publicTable.query(
         `
-        UPDATE comment
-        SET user_id = -1
+        DELETE comment
         WHERE user_id = $1;
         `,
         [id],
