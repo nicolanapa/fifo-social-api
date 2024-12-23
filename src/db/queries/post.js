@@ -25,6 +25,16 @@ async function getPost(id) {
     return rows;
 }
 
+async function postPost(userId, title, content) {
+    await publicTable.query(
+        `
+        INSERT INTO post (user_id, title, content, creation_date)
+        VALUES ($1, $2, $3, (SELECT now()));
+        `,
+        [userId, title, content],
+    );
+}
+
 async function deletePost(id) {
     await publicTable.query(
         `
@@ -72,4 +82,4 @@ async function getAllComments(id) {
     return rows;
 }
 
-export { getPosts, getPost, deletePost, getAllComments };
+export { getPosts, getPost, postPost, deletePost, getAllComments };
