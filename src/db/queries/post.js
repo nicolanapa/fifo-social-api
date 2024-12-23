@@ -25,4 +25,23 @@ async function getPost(id) {
     return rows;
 }
 
-export { getPosts, getPost };
+async function deletePost(id, userId) {
+    await publicTable.query(
+        `
+        DELETE FROM post_like
+        WHERE post_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        UPDATE post
+        SET user_id = -1
+        WHERE user_id = $1;
+        `,
+        [userId],
+    );
+}
+
+export { getPosts, getPost, deletePost };
