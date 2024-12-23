@@ -14,7 +14,7 @@ class PostController {
     async deletePost(req, res) {
         if (req.isAuthenticated()) {
             if (req.user.id === req.body.id || req.user.admin === "true") {
-                await postQueries.deletePost(req.params.id, req.user.id);
+                await postQueries.deletePost(req.params.id);
 
                 return res.status(200).json({ success: true });
             } else {
