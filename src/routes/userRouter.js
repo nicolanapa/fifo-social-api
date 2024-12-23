@@ -15,6 +15,7 @@ const userValidator = [
     body("description")
         .trim()
         .optional()
+        .escape()
         .isLength({ max: 150 })
         .withMessage("Description size exceeded (150 characters)"),
 ];
