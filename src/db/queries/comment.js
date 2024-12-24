@@ -53,4 +53,36 @@ async function deleteComment(id) {
     );
 }
 
-export { getComments, getComment, postComment, deleteComment };
+async function getLikeStatus(commentId, userId) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT * FROM comment_like
+        WHERE comment_id = $1 AND user_id = $2;
+        `,
+        [commentId, userId],
+    );
+
+    return rows;
+}
+
+async function addLike(commentId, userId) {
+    await publicTable.query(
+        `
+        INSERT INTO comment_like (comment_id, user_id)
+        VALUES ($1, $2);
+        `,
+        [commentId, userId],
+    );
+}
+
+async function removeLike(commentId, userId) {
+    await publicTable.query(
+        `
+        DELETE FROM comment_like
+        WHERE comment_id = $1 AND user_id = $2;
+        `,
+        [commentId, userId],
+    );
+}
+
+export { getComments, getComment, postComment, deleteComment, getLikeStatus, addLike, removeLike };

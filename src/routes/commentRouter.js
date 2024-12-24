@@ -21,4 +21,6 @@ commentRouter.post("/:postId", commentValidator, CommentController.postComment);
 
 commentRouter.delete("/:id", CommentController.deleteComment);
 
+commentRouter.post("/:id/like", CommentController.postLike);
+
 export { commentRouter };
