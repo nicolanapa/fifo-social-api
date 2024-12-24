@@ -29,7 +29,7 @@ class UserController {
 
     async deleteUser(req, res) {
         if (req.isAuthenticated()) {
-            if (req.user.id === req.body.id || req.user.admin === "true") {
+            if (req.user.id === req.params.id || req.user.admin === "true") {
                 await userQueries.deleteUser(req.params.id);
 
                 return res.status(200).json({ success: true });
