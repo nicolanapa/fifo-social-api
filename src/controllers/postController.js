@@ -19,7 +19,7 @@ class PostController {
             }
 
             try {
-                await postQueries.postPost(req.body.id, req.body.title, req.body.content);
+                await postQueries.postPost(req.user.id, req.body.title, req.body.content);
 
                 return res.status(201).json({ success: true });
             } catch {
