@@ -28,8 +28,8 @@ async function getComment(id) {
 async function postComment(postId, userId, content) {
     await publicTable.query(
         `
-        INSERT INTO comment (post_id, user_id, content)
-        VALUES ($1, $2, $3);
+        INSERT INTO comment (post_id, user_id, content, creation_date)
+        VALUES ($1, $2, $3, (SELECT now()));
         `,
         [postId, userId, content],
     );
