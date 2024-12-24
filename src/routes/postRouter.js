@@ -10,7 +10,12 @@ const postValidator = [
         .withMessage("Title cannot be empty")
         .isLength({ min: 2, max: 64 })
         .withMessage("Title lenght must be between 2 and 64 characters"),
-    body("content").trim().optional().escape().isLength({ max: 2000 }),
+    body("content")
+        .trim()
+        .optional()
+        .escape()
+        .isLength({ max: 2000 })
+        .withMessage("Content size exceeded (2000 characters)"),
 ];
 
 const postRouter = Router();
