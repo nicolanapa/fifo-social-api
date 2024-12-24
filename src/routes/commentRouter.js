@@ -1,5 +1,5 @@
 import { Router } from "express";
-import commentController from "../controllers/commentController.js";
+import CommentController from "../controllers/commentController.js";
 import { body } from "express-validator";
 
 const commentValidator = [
@@ -13,12 +13,12 @@ const commentValidator = [
 
 const commentRouter = Router();
 
-commentRouter.get("/", commentController.getComments);
+commentRouter.get("/", CommentController.getComments);
 
-commentRouter.get("/:id", commentController.getComment);
+commentRouter.get("/:id", CommentController.getComment);
 
-commentRouter.post("/:postId", commentValidator, commentController.postComment);
+commentRouter.post("/:postId", commentValidator, CommentController.postComment);
 
-commentRouter.delete("/:id", commentController.deleteComment);
+commentRouter.delete("/:id", CommentController.deleteComment);
 
 export { commentRouter };

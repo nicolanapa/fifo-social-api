@@ -1,7 +1,7 @@
 import { validationResult } from "express-validator";
 import * as commentQueries from "../db/queries/comment.js";
 
-class commentController {
+class CommentController {
     async getComments(req, res) {
         res.status(200).json(await commentQueries.getComments());
     }
@@ -47,4 +47,4 @@ class commentController {
     }
 }
 
-export default new commentController();
+export default new CommentController();
