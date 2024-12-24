@@ -82,4 +82,45 @@ async function getAllComments(id) {
     return rows;
 }
 
-export { getPosts, getPost, postPost, deletePost, getAllComments };
+async function getLikeStatus(postId, userId) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT * FROM post_like
+        WHERE post_id = $1 AND user_id = $2;
+        `,
+        [postId, userId],
+    );
+
+    return rows;
+}
+
+async function addLike(postId, userId) {
+    await publicTable.query(
+        `
+        INSERT INTO post_like (post_id, user_id)
+        VALUES ($1, $2);
+        `,
+        [postId, userId],
+    );
+}
+
+async function removeLike(postId, userId) {
+    await publicTable.query(
+        `
+        DELETE FROM post_like
+        WHERE post_id = $1 AND user_id = $2;
+        `,
+        [postId, userId],
+    );
+}
+
+export {
+    getPosts,
+    getPost,
+    postPost,
+    deletePost,
+    getAllComments,
+    getLikeStatus,
+    addLike,
+    removeLike,
+};
