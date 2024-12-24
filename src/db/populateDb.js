@@ -32,7 +32,8 @@ const SQL_PUBLIC = `
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         post_id INTEGER REFERENCES post(id),
         user_id INTEGER REFERENCES user_account(id),
-        content TEXT
+        content TEXT,
+        creation_date TIMESTAMP WITH TIME ZONE
     );
 
     CREATE TABLE IF NOT EXISTS comment_like (
