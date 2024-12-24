@@ -6,6 +6,7 @@ import session from "express-session";
 import passport from "passport";
 import { userRouter } from "./routes/userRouter.js";
 import { postRouter } from "./routes/postRouter.js";
+import { commentRouter } from "./routes/commentRouter.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,5 +22,7 @@ app.use(express.static(path.join(__dirname + "/styles")));
 app.use("/user", userRouter);
 
 app.use("/post", postRouter);
+
+app.use("/comment", commentRouter);
 
 app.listen(PORT);
