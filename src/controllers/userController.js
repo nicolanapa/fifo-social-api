@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import * as userQueries from "../db/queries/user.js";
+import loginSignupController from "./loginSignupController.js";
 
 class UserController {
     async getUsers(req, res) {
@@ -18,10 +19,18 @@ class UserController {
         }
 
         try {
-            await userQueries.postUser(req.body.username, req.body.description);
-            // Fetch the private db with the generated password
+            const password = loginSignupController.generatePassword();
 
-            return res.status(201).json({ success: true, password: "" });
+            const hashedPassword =
+                await loginSignupController.hashPassword(password);
+
+            await userQueries.postUser(
+                req.body.username,
+                req.body.description,
+                hashedPassword,
+            );
+
+            return res.status(201).json({ success: true, password: password });
         } catch {
             return res.status(500).json({ success: false, password: "" });
         }
@@ -34,12 +43,10 @@ class UserController {
 
                 return res.status(200).json({ success: true });
             } else {
-                return res
-                    .status(401)
-                    .json({
-                        success: false,
-                        msg: "Not enough rights to do that",
-                    });
+                return res.status(401).json({
+                    success: false,
+                    msg: "Not enough rights to do that",
+                });
             }
         }
 
