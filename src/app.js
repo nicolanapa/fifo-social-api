@@ -25,6 +25,10 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname + "/styles")));
 
+app.get("/favicon.ico", (req, res) => {
+    res.sendFile(__dirname + "/favicon.svg");
+});
+
 app.use("/user", userRouter);
 
 app.use("/post", postRouter);
