@@ -88,6 +88,7 @@ class PostController {
 
     async postLike(req, res) {
         if (req.isAuthenticated()) {
+            // fix: change req.body.id, instead get user id by searching the liked post
             if (req.user.id === req.body.id) {
                 try {
                     return await this.setLike(req, res);

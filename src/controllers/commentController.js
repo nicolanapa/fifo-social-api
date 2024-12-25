@@ -43,17 +43,16 @@ class CommentController {
 
     async deleteComment(req, res) {
         if (req.isAuthenticated()) {
+            // fix: change req.body.id, instead get user id by searching the comment
             if (req.user.id === req.body.id || req.user.admin === "true") {
                 await commentQueries.deleteComment(req.params.id);
 
                 return res.status(200).json({ success: true });
             } else {
-                return res
-                    .status(401)
-                    .json({
-                        success: false,
-                        msg: "Not enough rights to do that",
-                    });
+                return res.status(401).json({
+                    success: false,
+                    msg: "Not enough rights to do that",
+                });
             }
         }
 
@@ -91,12 +90,10 @@ class CommentController {
                     return res.status(500).json({ success: false });
                 }
             } else {
-                return res
-                    .status(401)
-                    .json({
-                        success: false,
-                        msg: "Not enough rights to do that",
-                    });
+                return res.status(401).json({
+                    success: false,
+                    msg: "Not enough rights to do that",
+                });
             }
         }
 
