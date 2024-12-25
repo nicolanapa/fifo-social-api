@@ -38,7 +38,7 @@ async function getUsername(username) {
     return rows;
 }
 
-async function postUser(username, description) {
+async function postUser(username, description, hashedPassword) {
     await publicTable.query(
         `
         INSERT INTO user_account (username)
@@ -55,7 +55,13 @@ async function postUser(username, description) {
         [username, description],
     );
 
-    // Add username and password to the private DB
+    await privateTable.query(
+        `
+        INSERT INTO user_password (username, hashed_password)
+        VALUES ($1, $2);
+        `,
+        [username, hashedPassword],
+    );
 }
 
 async function deleteUser(id) {
