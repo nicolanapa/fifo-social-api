@@ -1,4 +1,7 @@
 import { validationResult } from "express-validator";
+import process from "process";
+import Crypto from "crypto";
+import * as argon2 from "argon2";
 
 class LoginSignupController {
     getLogin(req, res) {
@@ -27,6 +30,20 @@ class LoginSignupController {
         }
 
         next();
+    }
+
+    generatePassword() {
+        let password = "";
+
+        for (let i = 0; i < process.env.LENGTH_GENERATED_PASSWORD; i++) {
+            password += Crypto.randomUUID();
+        }
+
+        return password;
+    }
+
+    async hashPassword(password) {
+        return await argon2.hash(password);
     }
 }
 
