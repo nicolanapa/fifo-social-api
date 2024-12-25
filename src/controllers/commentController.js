@@ -24,7 +24,11 @@ class CommentController {
             }
 
             try {
-                await commentQueries.postComment(req.body.postId, req.user.id, req.body.content);
+                await commentQueries.postComment(
+                    req.body.postId,
+                    req.user.id,
+                    req.body.content,
+                );
 
                 return res.status(201).json({ success: true });
             } catch {
@@ -32,7 +36,9 @@ class CommentController {
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 
     async deleteComment(req, res) {
@@ -44,15 +50,23 @@ class CommentController {
             } else {
                 return res
                     .status(401)
-                    .json({ success: false, msg: "Not enough rights to do that" });
+                    .json({
+                        success: false,
+                        msg: "Not enough rights to do that",
+                    });
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 
     async setLike(req, res) {
-        const getLike = await commentQueries.getLikeStatus(req.params.id, req.user.id);
+        const getLike = await commentQueries.getLikeStatus(
+            req.params.id,
+            req.user.id,
+        );
         let successMessage = "";
 
         if (!getLike || getLike.length === 0) {
@@ -79,11 +93,16 @@ class CommentController {
             } else {
                 return res
                     .status(401)
-                    .json({ success: false, msg: "Not enough rights to do that" });
+                    .json({
+                        success: false,
+                        msg: "Not enough rights to do that",
+                    });
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 }
 

@@ -85,4 +85,12 @@ async function removeLike(commentId, userId) {
     );
 }
 
-export { getComments, getComment, postComment, deleteComment, getLikeStatus, addLike, removeLike };
+export {
+    getComments,
+    getComment,
+    postComment,
+    deleteComment,
+    getLikeStatus,
+    addLike,
+    removeLike,
+};

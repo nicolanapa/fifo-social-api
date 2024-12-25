@@ -36,11 +36,16 @@ class UserController {
             } else {
                 return res
                     .status(401)
-                    .json({ success: false, msg: "Not enough rights to do that" });
+                    .json({
+                        success: false,
+                        msg: "Not enough rights to do that",
+                    });
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 }
 

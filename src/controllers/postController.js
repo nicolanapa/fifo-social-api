@@ -24,7 +24,11 @@ class PostController {
             }
 
             try {
-                await postQueries.postPost(req.user.id, req.body.title, req.body.content);
+                await postQueries.postPost(
+                    req.user.id,
+                    req.body.title,
+                    req.body.content,
+                );
 
                 return res.status(201).json({ success: true });
             } catch {
@@ -32,7 +36,9 @@ class PostController {
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 
     async deletePost(req, res) {
@@ -44,11 +50,16 @@ class PostController {
             } else {
                 return res
                     .status(401)
-                    .json({ success: false, msg: "Not enough rights to do that" });
+                    .json({
+                        success: false,
+                        msg: "Not enough rights to do that",
+                    });
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 
     async getAllComments(req, res) {
@@ -56,7 +67,10 @@ class PostController {
     }
 
     async setLike(req, res) {
-        const getLike = await postQueries.getLikeStatus(req.params.id, req.user.id);
+        const getLike = await postQueries.getLikeStatus(
+            req.params.id,
+            req.user.id,
+        );
         let successMessage = "";
 
         if (!getLike || getLike.length === 0) {
@@ -83,11 +97,16 @@ class PostController {
             } else {
                 return res
                     .status(401)
-                    .json({ success: false, msg: "Not enough rights to do that" });
+                    .json({
+                        success: false,
+                        msg: "Not enough rights to do that",
+                    });
             }
         }
 
-        return res.status(401).json({ success: false, msg: "Not authenticated" });
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
     }
 }
 
