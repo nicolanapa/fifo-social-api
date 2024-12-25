@@ -11,7 +11,11 @@ class LoginSignupController {
         ) {
             return res
                 .status(200)
-                .json({ success: true, status: "Authenticated" });
+                .json({
+                    success: true,
+                    status: "Authenticated",
+                    username: req.user.username,
+                });
         } else if (req.query.success === "false") {
             return res.status(401).json({
                 success: false,
