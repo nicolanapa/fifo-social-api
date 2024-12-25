@@ -9,6 +9,7 @@ import { userRouter } from "./routes/userRouter.js";
 import { postRouter } from "./routes/postRouter.js";
 import { commentRouter } from "./routes/commentRouter.js";
 import { privateTable } from "./db/pool.js";
+import { loginRouter } from "./routes/loginRouter.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,6 +38,8 @@ app.use(express.static(path.join(__dirname + "/styles")));
 app.get("/favicon.ico", (req, res) => {
     res.sendFile(__dirname + "/favicon.svg");
 });
+
+app.use("/login", loginRouter);
 
 app.use("/user", userRouter);
 
