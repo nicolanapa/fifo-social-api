@@ -25,7 +25,7 @@ class CommentController {
 
             try {
                 await commentQueries.postComment(
-                    req.body.postId,
+                    req.params.postId,
                     req.user.id,
                     req.body.content,
                 );
