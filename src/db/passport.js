@@ -5,7 +5,7 @@ import { privateTable } from "./pool.js";
 
 const customFields = {
     usernameField: "username",
-    passwordField: "hashed_password",
+    passwordField: "password",
 };
 
 passport.use(
