@@ -2,6 +2,7 @@ import { Router } from "express";
 import userController from "../controllers/userController.js";
 import { body } from "express-validator";
 import { checkIfUserAlreadyExists } from "../controllers/customValidatorController.js";
+import { correctIdType } from "../middlewares/correctIdType.js";
 
 const userValidator = [
     body("username")
@@ -25,6 +26,8 @@ const userRouter = Router();
 userRouter.get("/", userController.getUsers);
 
 userRouter.post("/", userValidator, userController.postUser);
+
+userRouter.use(":genericId", correctIdType);
 
 userRouter.get("/:id", userController.getUser);
 

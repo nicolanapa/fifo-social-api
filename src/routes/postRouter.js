@@ -1,6 +1,7 @@
 import { Router } from "express";
 import postController from "../controllers/postController.js";
 import { body } from "express-validator";
+import { correctIdType } from "../middlewares/correctIdType.js";
 
 const postValidator = [
     body("title")
@@ -23,6 +24,8 @@ const postRouter = Router();
 postRouter.get("/", postController.getPosts);
 
 postRouter.post("/", postValidator, postController.postPost);
+
+postRouter.use("/:genericId", correctIdType);
 
 postRouter.get("/:id", postController.getPost);
 

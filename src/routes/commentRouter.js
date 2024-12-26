@@ -1,6 +1,7 @@
 import { Router } from "express";
-import CommentController from "../controllers/commentController.js";
 import { body } from "express-validator";
+import CommentController from "../controllers/commentController.js";
+import { correctIdType } from "../middlewares/correctIdType.js";
 
 const commentValidator = [
     body("content")
@@ -14,6 +15,8 @@ const commentValidator = [
 const commentRouter = Router();
 
 commentRouter.get("/", CommentController.getComments);
+
+commentRouter.use("/:genericId", correctIdType);
 
 commentRouter.get("/:id", CommentController.getComment);
 
