@@ -43,8 +43,12 @@ class CommentController {
 
     async deleteComment(req, res) {
         if (req.isAuthenticated()) {
-            // fix: change req.body.id, instead get user id by searching the comment
-            if (req.user.id === req.body.id || req.user.admin === "true") {
+            const comment = await commentQueries.getComment(req.params.id);
+
+            if (
+                req.user.id === comment[0].user_id ||
+                req.user.admin === "true"
+            ) {
                 await commentQueries.deleteComment(req.params.id);
 
                 return res.status(200).json({ success: true });
@@ -83,17 +87,10 @@ class CommentController {
 
     async postLike(req, res) {
         if (req.isAuthenticated()) {
-            if (req.user.id === req.body.id) {
-                try {
-                    return await this.setLike(req, res);
-                } catch {
-                    return res.status(500).json({ success: false });
-                }
-            } else {
-                return res.status(401).json({
-                    success: false,
-                    msg: "Not enough rights to do that",
-                });
+            try {
+                return await this.setLike(req, res);
+            } catch {
+                return res.status(500).json({ success: false });
             }
         }
 

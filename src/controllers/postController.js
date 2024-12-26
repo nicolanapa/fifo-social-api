@@ -43,17 +43,17 @@ class PostController {
 
     async deletePost(req, res) {
         if (req.isAuthenticated()) {
-            if (req.user.id === req.body.id || req.user.admin === "true") {
+            const post = await postQueries.getPost(req.params.id);
+
+            if (req.user.id === post[0].user_id || req.user.admin === "true") {
                 await postQueries.deletePost(req.params.id);
 
                 return res.status(200).json({ success: true });
             } else {
-                return res
-                    .status(401)
-                    .json({
-                        success: false,
-                        msg: "Not enough rights to do that",
-                    });
+                return res.status(401).json({
+                    success: false,
+                    msg: "Not enough rights to do that",
+                });
             }
         }
 
@@ -88,20 +88,10 @@ class PostController {
 
     async postLike(req, res) {
         if (req.isAuthenticated()) {
-            // fix: change req.body.id, instead get user id by searching the liked post
-            if (req.user.id === req.body.id) {
-                try {
-                    return await this.setLike(req, res);
-                } catch {
-                    return res.status(500).json({ success: false });
-                }
-            } else {
-                return res
-                    .status(401)
-                    .json({
-                        success: false,
-                        msg: "Not enough rights to do that",
-                    });
+            try {
+                return await this.setLike(req, res);
+            } catch {
+                return res.status(500).json({ success: false });
             }
         }
 
