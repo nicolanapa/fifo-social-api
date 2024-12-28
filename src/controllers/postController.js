@@ -15,7 +15,7 @@ class PostController {
         res.status(200).json(await postQueries.getPost(req.params.id));
     }
 
-    async postPost(req, res) {
+    async postPost(req, res, next) {
         if (req.isAuthenticated()) {
             const errors = validationResult(req);
 
@@ -32,7 +32,10 @@ class PostController {
 
                 return res.status(201).json({ success: true });
             } catch {
-                return res.status(500).json({ success: false });
+                req.customError =
+                    "An Error has happened in POST /post. Post couldn't be created";
+
+                return next(new Error(req.customError));
             }
         }
 
@@ -86,12 +89,15 @@ class PostController {
         return res.status(201).json({ success: true, msg: successMessage });
     }
 
-    async postLike(req, res) {
+    async postLike(req, res, next) {
         if (req.isAuthenticated()) {
             try {
                 return await this.setLike(req, res);
             } catch {
-                return res.status(500).json({ success: false });
+                req.customError =
+                    "An Error has happened in POST /post/:id/like";
+
+                return next(new Error(req.customError));
             }
         }
 

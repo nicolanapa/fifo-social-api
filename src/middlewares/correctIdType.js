@@ -8,6 +8,8 @@ function correctIdType(req, res, next) {
         }
     }
 
+    req.customError = "ID type is not a Number";
+
     next(new Error(req.params.genericId + " is not a Number"));
 }
 

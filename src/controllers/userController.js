@@ -11,7 +11,7 @@ class UserController {
         res.status(200).json(await userQueries.getUser(req.params.id));
     }
 
-    async postUser(req, res) {
+    async postUser(req, res, next) {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -32,7 +32,10 @@ class UserController {
 
             return res.status(201).json({ success: true, password: password });
         } catch {
-            return res.status(500).json({ success: false, password: "" });
+            req.customError =
+                "An Error has happened in POST /user. User couldn't be created";
+
+            return next(new Error(req.customError));
         }
     }
 
