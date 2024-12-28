@@ -2,6 +2,7 @@ import express from "express";
 import process from "process";
 import url from "url";
 import path from "path";
+import cors from "cors";
 import session from "express-session";
 import passport from "./db/passport.js";
 import connectPgSimple from "connect-pg-simple";
@@ -17,6 +18,11 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
 const pgSession = connectPgSimple(session);
+
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+};
 
 const app = express();
 
@@ -36,6 +42,7 @@ app.use(
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname + "/styles")));
+app.use(cors(corsOptions));
 
 app.get("/favicon.ico", (req, res) => {
     res.sendFile(__dirname + "/favicon.svg");
