@@ -9,21 +9,23 @@ class LoginSignupController {
             req.isAuthenticated() ||
             (req.isAuthenticated() && req.query.success)
         ) {
-            return res
-                .status(200)
-                .json({
-                    success: true,
-                    status: "Authenticated",
-                    username: req.user.username,
-                });
+            return res.status(200).json({
+                success: true,
+                status: "Authenticated",
+                isAuthenticated: true,
+                username: req.user.username,
+            });
         } else if (req.query.success === "false") {
             return res.status(401).json({
                 success: false,
                 msg: "Something's wrong, maybe the username or password is wrong?",
+                isAuthenticated: false,
             });
         }
 
-        return res.status(200).json({ status: "Not authenticated" });
+        return res
+            .status(200)
+            .json({ status: "Not authenticated", isAuthenticated: false });
     }
 
     async login(req, res, next) {
