@@ -14,6 +14,7 @@ class LoginSignupController {
                 status: "Authenticated",
                 isAuthenticated: true,
                 username: req.user.username,
+                id: req.user.id,
             });
         } else if (req.query.success === "false") {
             return res.status(401).json({
