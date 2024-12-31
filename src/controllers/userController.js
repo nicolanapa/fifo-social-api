@@ -57,6 +57,10 @@ class UserController {
             .status(401)
             .json({ success: false, msg: "Not authenticated" });
     }
+
+    async getAllPosts(req, res) {
+        res.status(200).json(await userQueries.getAllPosts(req.params.id));
+    }
 }
 
 export default new UserController();

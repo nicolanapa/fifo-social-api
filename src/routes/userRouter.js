@@ -33,4 +33,6 @@ userRouter.get("/:id", userController.getUser);
 
 userRouter.delete("/:id", userController.deleteUser);
 
+userRouter.get("/:id/posts", userController.getAllPosts);
+
 export { userRouter };

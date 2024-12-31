@@ -122,4 +122,17 @@ async function deleteUser(id) {
     );
 }
 
-export { getUsers, getUser, getUsername, postUser, deleteUser };
+async function getAllPosts(id) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT *, (SELECT COUNT(post_id) AS likes FROM post_like WHERE post_like.post_id = post.id) 
+        FROM post 
+        WHERE post.user_id = $1;
+        `,
+        [id],
+    );
+
+    return rows;
+}
+
+export { getUsers, getUser, getUsername, postUser, deleteUser, getAllPosts };
