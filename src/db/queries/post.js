@@ -54,16 +54,16 @@ async function deletePost(id) {
 
     await publicTable.query(
         `
-        DELETE FROM post
-        WHERE id = $1;
+        DELETE FROM comment
+        WHERE post_id = $1;
         `,
         [id],
     );
 
     await publicTable.query(
         `
-        DELETE FROM comment
-        WHERE post_id = $1;
+        DELETE FROM post
+        WHERE id = $1;
         `,
         [id],
     );

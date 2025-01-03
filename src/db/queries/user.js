@@ -91,8 +91,8 @@ async function deleteUser(id) {
 
     await publicTable.query(
         `
-        DELETE FROM user_account
-        WHERE id = $1;
+        DELETE FROM comment
+        WHERE user_id = $1;
         `,
         [id],
     );
@@ -107,8 +107,8 @@ async function deleteUser(id) {
 
     await publicTable.query(
         `
-        DELETE FROM comment
-        WHERE user_id = $1;
+        DELETE FROM user_account
+        WHERE id = $1;
         `,
         [id],
     );
