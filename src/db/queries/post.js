@@ -69,6 +69,17 @@ async function deletePost(id) {
     );
 }
 
+async function updatePost(id, title, content) {
+    await publicTable.query(
+        `
+        UPDATE post
+        SET title = $2, content = $3
+        WHERE id = $1;
+        `,
+        [id, title, content],
+    );
+}
+
 async function getAllComments(id) {
     const { rows } = await publicTable.query(
         `
@@ -119,6 +130,7 @@ export {
     getPost,
     postPost,
     deletePost,
+    updatePost,
     getAllComments,
     getLikeStatus,
     addLike,

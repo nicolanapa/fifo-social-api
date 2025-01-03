@@ -65,6 +65,44 @@ class PostController {
             .json({ success: false, msg: "Not authenticated" });
     }
 
+    async updatePost(req, res, next) {
+        if (req.isAuthenticated()) {
+            const post = await postQueries.getPost(req.params.id);
+
+            if (req.user.id === post[0].user_id || req.user.admin === "true") {
+                const errors = validationResult(req);
+
+                if (!errors.isEmpty()) {
+                    return res.status(400).json(errors.array());
+                }
+
+                try {
+                    await postQueries.updatePost(
+                        req.params.id,
+                        req.body.title,
+                        req.body.content,
+                    );
+
+                    return res.status(200).json({ success: true });
+                } catch {
+                    req.customError =
+                        "An Error has happened in PATCH /post. Post couldn't be updated";
+
+                    return next(new Error(req.customError));
+                }
+            } else {
+                return res.status(401).json({
+                    success: false,
+                    msg: "Not enough rights to do that",
+                });
+            }
+        }
+
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
+    }
+
     async getAllComments(req, res) {
         res.status(200).json(await postQueries.getAllComments(req.params.id));
     }

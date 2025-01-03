@@ -31,6 +31,8 @@ postRouter.get("/:id", postController.getPost);
 
 postRouter.delete("/:id", postController.deletePost);
 
+postRouter.patch("/:id", postController.updatePost);
+
 postRouter.get("/:id/comments", postController.getAllComments);
 
 postRouter.post("/:id/like", postController.postLike);
