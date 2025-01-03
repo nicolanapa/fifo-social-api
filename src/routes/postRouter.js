@@ -31,7 +31,7 @@ postRouter.get("/:id", postController.getPost);
 
 postRouter.delete("/:id", postController.deletePost);
 
-postRouter.patch("/:id", postController.updatePost);
+postRouter.patch("/:id", postValidator, postController.updatePost);
 
 postRouter.get("/:id/comments", postController.getAllComments);
 
