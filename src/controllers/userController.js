@@ -49,8 +49,6 @@ class UserController {
                     if (err) {
                         return next(err);
                     }
-
-                    res.redirect("/");
                 });
 
                 await userQueries.deleteUser(req.params.id);
