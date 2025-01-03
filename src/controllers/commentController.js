@@ -67,6 +67,46 @@ class CommentController {
             .json({ success: false, msg: "Not authenticated" });
     }
 
+    async updateComment(req, res, next) {
+        if (req.isAuthenticated()) {
+            const comment = await commentQueries.getComment(req.params.id);
+
+            if (
+                req.user.id === comment[0].user_id ||
+                req.user.admin === "true"
+            ) {
+                const errors = validationResult(req);
+
+                if (!errors.isEmpty()) {
+                    return res.status(400).json(errors.array());
+                }
+
+                try {
+                    await commentQueries.updateComment(
+                        req.params.id,
+                        req.body.content,
+                    );
+
+                    return res.status(200).json({ success: true });
+                } catch {
+                    req.customError =
+                        "An Error has happened in PATCH /comment. Comment couldn't be updated";
+
+                    return next(new Error(req.customError));
+                }
+            } else {
+                return res.status(401).json({
+                    success: false,
+                    msg: "Not enough rights to do that",
+                });
+            }
+        }
+
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
+    }
+
     async setLike(req, res) {
         const getLike = await commentQueries.getLikeStatus(
             req.params.id,

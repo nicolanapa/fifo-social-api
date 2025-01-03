@@ -53,6 +53,17 @@ async function deleteComment(id) {
     );
 }
 
+async function updateComment(id, content) {
+    await publicTable.query(
+        `
+        UPDATE comment
+        SET content = $2
+        WHERE id = $1;
+        `,
+        [id, content],
+    );
+}
+
 async function getLikeStatus(commentId, userId) {
     const { rows } = await publicTable.query(
         `
@@ -90,6 +101,7 @@ export {
     getComment,
     postComment,
     deleteComment,
+    updateComment,
     getLikeStatus,
     addLike,
     removeLike,
