@@ -122,6 +122,17 @@ async function deleteUser(id) {
     );
 }
 
+async function updateDescription(id, description) {
+    await publicTable.query(
+        `
+        UPDATE user_info
+        SET description = $2
+        WHERE user_id = $1;
+        `,
+        [id, description],
+    );
+}
+
 async function getAllPosts(id) {
     const { rows } = await publicTable.query(
         `
@@ -135,4 +146,12 @@ async function getAllPosts(id) {
     return rows;
 }
 
-export { getUsers, getUser, getUsername, postUser, deleteUser, getAllPosts };
+export {
+    getUsers,
+    getUser,
+    getUsername,
+    postUser,
+    deleteUser,
+    updateDescription,
+    getAllPosts,
+};

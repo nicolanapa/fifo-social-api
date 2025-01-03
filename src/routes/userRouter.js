@@ -33,6 +33,8 @@ userRouter.get("/:id", userController.getUser);
 
 userRouter.delete("/:id", userController.deleteUser);
 
+userRouter.patch("/:id", userValidator[1], userController.updateDescription);
+
 userRouter.get("/:id/posts", userController.getAllPosts);
 
 export { userRouter };
