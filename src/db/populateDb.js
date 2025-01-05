@@ -41,6 +41,18 @@ const SQL_PUBLIC = `
         comment_id INTEGER REFERENCES comment(id),
         user_id INTEGER REFERENCES user_account(id)
     );
+
+    CREATE TABLE IF NOT EXISTS favorite_post (
+        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        post_id INTEGER REFERENCES post(id),
+        user_id INTEGER REFERENCES user_account(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS favorite_comment (
+        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        comment_id INTEGER REFERENCES comment(id),
+        user_id INTEGER REFERENCES user_account(id)
+    );
 `;
 
 const SQL_PRIVATE = `
