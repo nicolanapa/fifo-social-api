@@ -10,11 +10,22 @@ favoriteRouter.get("/:userId/posts", FavoriteController.getPosts);
 
 favoriteRouter.get("/:userId/comments", FavoriteController.getComments);
 
-favoriteRouter.post("/:userId/post/:postId", FavoriteController.postPost);
+favoriteRouter.post(
+    "/:id/post",
+    (req, res, next) => {
+        req.typeOfFavorite = "post";
+        next();
+    },
+    FavoriteController.postFavorite,
+);
 
 favoriteRouter.post(
-    "/:userId/comment/:commentId",
-    FavoriteController.postComment,
+    "/:id/comment",
+    (req, res, next) => {
+        req.typeOfFavorite = "comment";
+        next();
+    },
+    FavoriteController.postFavorite,
 );
 
 export { favoriteRouter };
