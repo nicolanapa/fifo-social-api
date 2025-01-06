@@ -13,6 +13,7 @@ import { privateTable } from "./db/pool.js";
 import { loginRouter } from "./routes/loginRouter.js";
 import { logError } from "./middlewares/logError.js";
 import { errorResponse } from "./middlewares/errorResponse.js";
+import { favoriteRouter } from "./routes/favoriteRouter.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,6 +57,8 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 
 app.use("/comment", commentRouter);
+
+app.use("/favorite", favoriteRouter);
 
 app.use(logError);
 app.use(errorResponse);
