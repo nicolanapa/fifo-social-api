@@ -51,7 +51,7 @@ async function removeFavorite(userId, xId, typeOfFavorite) {
         await publicTable.query(
             `
             DELETE FROM favorite_post
-            WHERE user_id = $1 AND post_id = $2
+            WHERE user_id = $1 AND post_id = $2;
             `,
             [userId, xId],
         );
@@ -59,7 +59,7 @@ async function removeFavorite(userId, xId, typeOfFavorite) {
         await publicTable.query(
             `
             DELETE FROM favorite_comment
-            WHERE user_id = $1 AND comment_id = $2
+            WHERE user_id = $1 AND comment_id = $2;
             `,
             [userId, xId],
         );
