@@ -54,6 +54,22 @@ async function deletePost(id) {
 
     await publicTable.query(
         `
+        DELETE FROM favorite_post
+        WHERE post_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        DELETE FROM favorite_comment
+        WHERE comment_id IN (SELECT id FROM comment WHERE post_id = $1);
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
         DELETE FROM comment
         WHERE post_id = $1;
         `,

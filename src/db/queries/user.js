@@ -91,6 +91,22 @@ async function deleteUser(id) {
 
     await publicTable.query(
         `
+        DELETE FROM favorite_post
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
+        DELETE FROM favorite_comment
+        WHERE user_id = $1;
+        `,
+        [id],
+    );
+
+    await publicTable.query(
+        `
         DELETE FROM comment
         WHERE user_id = $1;
         `,
