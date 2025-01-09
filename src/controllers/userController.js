@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import * as userQueries from "../db/queries/user.js";
-import loginSignupController from "./loginSignupController.js";
+import loginSignupController from "./LoginSignupController.js";
 
 class UserController {
     async getUsers(req, res) {

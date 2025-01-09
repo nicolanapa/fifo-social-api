@@ -1,5 +1,5 @@
 import { Router } from "express";
-import FavoriteController from "../controllers/favoriteController.js";
+import FavoriteController from "../controllers/FavoriteController.js";
 import { correctIdType } from "../middlewares/correctIdType.js";
 
 const favoriteRouter = Router();

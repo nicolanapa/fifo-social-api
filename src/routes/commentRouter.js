@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import CommentController from "../controllers/commentController.js";
+import CommentController from "../controllers/CommentController.js";
 import { correctIdType } from "../middlewares/correctIdType.js";
 
 const commentValidator = [

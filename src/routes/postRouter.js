@@ -1,5 +1,5 @@
 import { Router } from "express";
-import postController from "../controllers/postController.js";
+import PostController from "../controllers/PostController.js";
 import { body } from "express-validator";
 import { correctIdType } from "../middlewares/correctIdType.js";
 
@@ -21,20 +21,20 @@ const postValidator = [
 
 const postRouter = Router();
 
-postRouter.get("/", postController.getPosts);
+postRouter.get("/", PostController.getPosts);
 
-postRouter.post("/", postValidator, postController.postPost);
+postRouter.post("/", postValidator, PostController.postPost);
 
 postRouter.use("/:genericId", correctIdType);
 
-postRouter.get("/:id", postController.getPost);
+postRouter.get("/:id", PostController.getPost);
 
-postRouter.delete("/:id", postController.deletePost);
+postRouter.delete("/:id", PostController.deletePost);
 
-postRouter.patch("/:id", postValidator, postController.updatePost);
+postRouter.patch("/:id", postValidator, PostController.updatePost);
 
-postRouter.get("/:id/comments", postController.getAllComments);
+postRouter.get("/:id/comments", PostController.getAllComments);
 
-postRouter.post("/:id/like", postController.postLike);
+postRouter.post("/:id/like", PostController.postLike);
 
 export { postRouter };

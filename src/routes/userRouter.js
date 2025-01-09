@@ -1,5 +1,5 @@
 import { Router } from "express";
-import userController from "../controllers/userController.js";
+import UserController from "../controllers/UserController.js";
 import { body } from "express-validator";
 import { checkIfUserAlreadyExists } from "../controllers/customValidatorController.js";
 import { correctIdType } from "../middlewares/correctIdType.js";
@@ -23,18 +23,18 @@ const userValidator = [
 
 const userRouter = Router();
 
-userRouter.get("/", userController.getUsers);
+userRouter.get("/", UserController.getUsers);
 
-userRouter.post("/", userValidator, userController.postUser);
+userRouter.post("/", userValidator, UserController.postUser);
 
 userRouter.use(":genericId", correctIdType);
 
-userRouter.get("/:id", userController.getUser);
+userRouter.get("/:id", UserController.getUser);
 
-userRouter.delete("/:id", userController.deleteUser);
+userRouter.delete("/:id", UserController.deleteUser);
 
-userRouter.patch("/:id", userValidator[1], userController.updateDescription);
+userRouter.patch("/:id", userValidator[1], UserController.updateDescription);
 
-userRouter.get("/:id/posts", userController.getAllPosts);
+userRouter.get("/:id/posts", UserController.getAllPosts);
 
 export { userRouter };

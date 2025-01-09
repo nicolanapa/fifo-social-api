@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import passport from "../db/passport.js";
-import loginSignupController from "../controllers/loginSignupController.js";
+import loginSignupController from "../controllers/LoginSignupController.js";
 
 const postValidator = [
     body("username")
