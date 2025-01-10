@@ -6,7 +6,7 @@ const followRouter = Router();
 
 followRouter.use("/:genericId", correctIdType);
 
-followRouter.get("/:userId", FollowController.alreadyFollowsUser);
+// followRouter.get("/:userId", FollowController.alreadyFollowsUser);
 
 followRouter.put("/:userId", FollowController.addFollow);
 
