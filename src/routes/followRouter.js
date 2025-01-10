@@ -6,10 +6,10 @@ const followRouter = Router();
 
 followRouter.use("/:genericId", correctIdType);
 
-followRouter.get("/:userId", FollowController.alreadyFollows);
+followRouter.get("/:userId", FollowController.alreadyFollowsUser);
 
-followRouter.post("/:userId", FollowController.follow);
+followRouter.put("/:userId", FollowController.addFollow);
 
-followRouter.delete("/:userId", FollowController.unfollow);
+followRouter.delete("/:userId", FollowController.removeFollow);
 
 export { followRouter };
