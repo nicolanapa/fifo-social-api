@@ -14,6 +14,12 @@ const SQL_PUBLIC = `
         admin BOOLEAN DEFAULT(false)
     );
 
+    CREATE TABLE IF NOT EXISTS user_follows (
+        id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+        user_id INTEGER REFERENCES user_account(id),
+        followed_id INTEGER REFERENCES user_account(id)
+    );
+
     CREATE TABLE IF NOT EXISTS post (
         id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         user_id INTEGER REFERENCES user_account(id),
