@@ -31,4 +31,32 @@ async function removeFollow(userId, followedId) {
     );
 }
 
-export { alreadyFollowsUser, addFollow, removeFollow };
+async function getFollowers(userId) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT * FROM user_follows
+        WHERE user_id = $1;`,
+        [userId],
+    );
+
+    return rows;
+}
+
+async function getFollowed(userId) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT * FROM user_follows
+        WHERE followed_id = $1;`,
+        [userId],
+    );
+
+    return rows;
+}
+
+export {
+    alreadyFollowsUser,
+    addFollow,
+    removeFollow,
+    getFollowers,
+    getFollowed,
+};
