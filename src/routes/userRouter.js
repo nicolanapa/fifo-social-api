@@ -37,4 +37,8 @@ userRouter.patch("/:id", userValidator[1], UserController.updateDescription);
 
 userRouter.get("/:id/posts", UserController.getAllPosts);
 
+userRouter.get("/:id/followers", UserController.getFollowers);
+
+userRouter.get("/:id/followed", UserController.getFollowed);
+
 export { userRouter };
