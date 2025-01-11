@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import * as userQueries from "../db/queries/user.js";
+import * as followQueries from "../db/queries/follow.js";
 import loginSignupController from "./LoginSignupController.js";
 
 class UserController {
@@ -106,6 +107,14 @@ class UserController {
 
     async getAllPosts(req, res) {
         res.status(200).json(await userQueries.getAllPosts(req.params.id));
+    }
+
+    async getFollowers(req, res) {
+        res.status(200).json(await followQueries.getFollowers(req.params.id));
+    }
+
+    async getFollowed(req, res) {
+        res.status(200).json(await followQueries.getFollowed(req.params.id));
     }
 }
 
