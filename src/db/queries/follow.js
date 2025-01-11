@@ -35,7 +35,7 @@ async function getFollowers(userId) {
     const { rows } = await publicTable.query(
         `
         SELECT * FROM user_follows
-        WHERE user_id = $1;`,
+        WHERE followed_id = $1;`,
         [userId],
     );
 
@@ -46,7 +46,7 @@ async function getFollowed(userId) {
     const { rows } = await publicTable.query(
         `
         SELECT * FROM user_follows
-        WHERE followed_id = $1;`,
+        WHERE user_id = $1;`,
         [userId],
     );
 
