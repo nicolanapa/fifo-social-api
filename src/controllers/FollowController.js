@@ -1,6 +1,11 @@
 import * as followQueries from "../db/queries/follow.js";
 
 class FollowController {
+    constructor() {
+        this.alreadyFollowsUser = this.alreadyFollowsUser.bind(this);
+        this.addFollow = this.addFollow.bind(this);
+    }
+
     async alreadyFollowsUser(userId, followedId) {
         return await followQueries.alreadyFollowsUser(userId, followedId);
     }
@@ -9,12 +14,29 @@ class FollowController {
 
     async addFollow(req, res, next) {
         if (req.isAuthenticated()) {
+            if (req.user.id === Number(req.params.userId)) {
+                return res
+                    .status(400)
+                    .json({ success: false, msg: "User can't follow itself" });
+            }
+
             try {
-                if (this.alreadyFollowsUser(req.user.id, req.params.id)) {
-                    return res.status(204).json({ success: true });
+                if (
+                    await this.alreadyFollowsUser(
+                        req.user.id,
+                        req.params.userId,
+                    )
+                ) {
+                    return res.status(204).send();
                 } else {
-                    await followQueries.addFollow(req.user.id, req.params.id);
-                    return res.status(201);
+                    await followQueries.addFollow(
+                        req.user.id,
+                        req.params.userId,
+                    );
+
+                    return res
+                        .status(201)
+                        .json({ success: true, msg: "User is following X" });
                 }
             } catch {
                 req.customError =
@@ -37,7 +59,7 @@ class FollowController {
                     req.params.userId,
                 );
 
-                return res.status(204).json({ success: true });
+                return res.status(204).send();
             } catch {
                 req.customError =
                     "An Error has happened in DELETE /follow/:userId";
