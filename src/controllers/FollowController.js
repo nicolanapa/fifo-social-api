@@ -3,6 +3,8 @@ import * as followQueries from "../db/queries/follow.js";
 class FollowController {
     constructor() {
         this.alreadyFollowsUser = this.alreadyFollowsUser.bind(this);
+        this.alreadyFollowsUserChecker =
+            this.alreadyFollowsUserChecker.bind(this);
         this.addFollow = this.addFollow.bind(this);
     }
 
@@ -10,7 +12,27 @@ class FollowController {
         return await followQueries.alreadyFollowsUser(userId, followedId);
     }
 
-    // async alreadyFollowsUserChecker(req, res) {}
+    async alreadyFollowsUserChecker(req, res) {
+        if (req.isAuthenticated()) {
+            if (req.user.id === Number(req.params.userId)) {
+                return res
+                    .status(400)
+                    .json({ success: false, msg: "User can't follow itself" });
+            }
+
+            return res.status(200).json({
+                success: true,
+                isFollowing: await this.alreadyFollowsUser(
+                    req.user.id,
+                    req.params.userId,
+                ),
+            });
+        }
+
+        return res
+            .status(401)
+            .json({ success: false, msg: "Not authenticated" });
+    }
 
     async addFollow(req, res, next) {
         if (req.isAuthenticated()) {
