@@ -129,6 +129,14 @@ async function deleteUser(id) {
         [id],
     );
 
+    await publicTable.query(
+        `
+        DELETE FROM user_follows
+        WHERE user_id = $1 OR followed_id = $1;
+        `,
+        [id],
+    );
+
     await privateTable.query(
         `
         DELETE FROM user_password
