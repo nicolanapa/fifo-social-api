@@ -2,7 +2,10 @@ import { publicTable, privateTable } from "../pool.js";
 
 async function getUsers() {
     const { rows } = await publicTable.query(`
-        SELECT * FROM user_account
+        SELECT *, 
+            (SELECT COUNT(followed_id) AS likes FROM user_follows WHERE user_follows.followed_id = user_account.id) AS followers, 
+            (SELECT COUNT(user_id) AS likes FROM user_follows WHERE user_follows.user_id = user_account.id) AS followed 
+        FROM user_account
         INNER JOIN user_info
         ON user_account.id = user_info.user_id;
         `);
@@ -13,7 +16,10 @@ async function getUsers() {
 async function getUser(id) {
     const { rows } = await publicTable.query(
         `
-        SELECT * FROM user_account
+        SELECT *, 
+            (SELECT COUNT(followed_id) AS likes FROM user_follows WHERE user_follows.followed_id = user_account.id) AS followers, 
+            (SELECT COUNT(user_id) AS likes FROM user_follows WHERE user_follows.user_id = user_account.id) AS followed 
+        FROM user_account
         INNER JOIN user_info
         ON user_account.id = user_info.user_id
         WHERE user_account.id = $1;
