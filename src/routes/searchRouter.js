@@ -9,6 +9,6 @@ searchRouter.get("/", (req, res) => {});
 
 searchRouter.get("/users", userValidator[0], SearchController.searchUsers);
 
-searchRouter.post("/posts", postValidator[0].SearchController.searchPosts);
+searchRouter.get("/posts", postValidator[0], SearchController.searchPosts);
 
 export { searchRouter };
