@@ -15,6 +15,7 @@ import { logError } from "./middlewares/logError.js";
 import { errorResponse } from "./middlewares/errorResponse.js";
 import { favoriteRouter } from "./routes/favoriteRouter.js";
 import { followRouter } from "./routes/followRouter.js";
+import { searchRouter } from "./routes/searchRouter.js";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,6 +63,8 @@ app.use("/comment", commentRouter);
 app.use("/favorite", favoriteRouter);
 
 app.use("/follow", followRouter);
+
+app.use("/search", searchRouter);
 
 app.use(logError);
 app.use(errorResponse);
