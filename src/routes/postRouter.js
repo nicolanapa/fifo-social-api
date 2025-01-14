@@ -37,4 +37,4 @@ postRouter.get("/:id/comments", PostController.getAllComments);
 
 postRouter.post("/:id/like", PostController.postLike);
 
-export { postRouter };
+export { postRouter, postValidator };

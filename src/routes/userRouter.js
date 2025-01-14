@@ -41,4 +41,4 @@ userRouter.get("/:id/followers", UserController.getFollowers);
 
 userRouter.get("/:id/followed", UserController.getFollowed);
 
-export { userRouter };
+export { userRouter, userValidator };
