@@ -13,6 +13,23 @@ async function getUsers() {
     return rows;
 }
 
+async function getUsersLike(username) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT *, 
+            (SELECT COUNT(followed_id) AS likes FROM user_follows WHERE user_follows.followed_id = user_account.id) AS followers, 
+            (SELECT COUNT(user_id) AS likes FROM user_follows WHERE user_follows.user_id = user_account.id) AS followed 
+        FROM user_account
+        INNER JOIN user_info
+        ON user_account.id = user_info.user_id
+        WHERE LOWER(user_account.username) LIKE LOWER($1);
+        `,
+        ["%" + username + "%"],
+    );
+
+    return rows;
+}
+
 async function getUser(id) {
     const { rows } = await publicTable.query(
         `
@@ -178,6 +195,7 @@ async function getAllPosts(id) {
 
 export {
     getUsers,
+    getUsersLike,
     getUser,
     getUsername,
     postUser,

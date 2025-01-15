@@ -12,6 +12,19 @@ async function getPosts() {
     return rows;
 }
 
+async function getPostsLike(title) {
+    const { rows } = await publicTable.query(
+        `
+        SELECT *, (SELECT COUNT(post_id) AS likes FROM post_like WHERE post_like.post_id = post.id) 
+        FROM post 
+        WHERE LOWER(post.title) LIKE LOWER($1);
+        `,
+        ["%" + title + "%"],
+    );
+
+    return rows;
+}
+
 async function getPost(id) {
     const { rows } = await publicTable.query(
         `
@@ -143,6 +156,7 @@ async function removeLike(postId, userId) {
 
 export {
     getPosts,
+    getPostsLike,
     getPost,
     postPost,
     deletePost,
