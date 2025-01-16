@@ -1,6 +1,17 @@
 import { Router } from "express";
 import { query } from "express-validator";
 import SearchController from "../controllers/SearchController.js";
+import { routeSearch } from "../middlewares/routeSearch.js";
+
+const globalValidator = [
+    query("searchInput")
+        .trim()
+        .escape()
+        .notEmpty()
+        .withMessage("Input field mustn't be empty")
+        .isLength({ min: 1, max: 64 })
+        .withMessage("Input field must be between 1 and 64 characters length"),
+];
 
 const userValidator = [
     query("username")
@@ -18,13 +29,15 @@ const postValidator = [
         .escape()
         .notEmpty()
         .withMessage("Title cannot be empty")
-        .isLength({ min: 2, max: 64 })
-        .withMessage("Title lenght must be between 2 and 64 characters"),
+        .isLength({ min: 1, max: 64 })
+        .withMessage("Title lenght must be between 1 and 64 characters"),
 ];
 
 const searchRouter = Router();
 
-searchRouter.get("/", (req, res) => {});
+searchRouter.get("/", routeSearch);
+
+searchRouter.get("/global", globalValidator, SearchController.searchGlobal);
 
 searchRouter.get("/users", userValidator, SearchController.searchUsers);
 
