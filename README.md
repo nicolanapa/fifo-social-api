@@ -2,11 +2,13 @@
 
 lorem
 
+<!-- Mention as a showcase of the Project: fifos.nicolanapa.duckdns.org and api.fifos.nicolanapa.duckdns.org -->
+
 ## Features
 
 ipsum
 
-# How to run the API and front-end
+# How to run the API and Front-end
 
 First clone the [_api_](https://github.com/nicolanapa/fifo-social-api) (this) repository and then the [_front-end_](https://github.com/nicolanapa/fifo-social-frontend) repository
 
@@ -15,13 +17,19 @@ git clone https://github.com/nicolanapa/fifo-social-api.git
 git clone https://github.com/nicolanapa/fifo-social-frontend.git
 ```
 
+To update it, run this on both the repos:
+
+```
+git pull origin main
+```
+
 ### API Configuration
 
-You now need to create and setup a _.env_ at the root of **fifo-social-api** with these constants:
+Firstly you need to create and setup a _.env_ at the root of **fifo-social-api** with these constants:
 <br>
 _You need to change the values that are commented with <>_
 <br>
-_\<x> is a suggested value / type, 'x' in the config .env equals x (no strings)_
+_\<x> is a suggested value / type or definition, 'x' in the config .env equals x (no strings)_
 
 <!-- Rework to a list of options for better reading -->
 
@@ -42,11 +50,11 @@ WRITE_ERROR_TO_FILE=<writes new errors to /logs when they'll happen><'true'><'fa
 CORS_ORIGIN="<'http://localhost:5173'>"
 ```
 
-Create the two DBs (_fifos_private_ and _fifos_public_ (though you can name them however you want)) in PostgreSQL, then run `npm run startDb` in **fifo-social-api** to automatically create all the needed Tables.
+Create the two DBs (_fifos_private_ and _fifos_public_ (though you can name them however you want but then change _DB_PUBLIC_NAME_ and _DB_PRIVAT_NAME_)) in PostgreSQL, then run `npm run startDb` in **fifo-social-api** to automatically create all the needed Tables.
 
 ### Front-end Configuration
 
-You also need to create and setup a _.env_ at the root of **fifo-social-frontend** with these constants:
+Now you need to create and setup a _.env_ at the root of **fifo-social-frontend** with these constants:
 <br>
 _You need to change the values that are commented with <>_
 <br>
@@ -94,6 +102,52 @@ npm run build
 
 And it'll output files that can be accessed by a HTTP server or Hoster
 
+### Reverse Proxying both the API and Front-end Servers
+
+To make it work you might need to reverse proxy them through Caddy / Nginx or similar.
+<br>
+It's suggested to reverse proxy the _front-end_ to a domain and the API through an subdomain (e.g. api) or similar.
+<br><br>
+I've currently only tested hosting and reverse proxying with Caddy.
+
+#### Caddy
+
+Here's as an example of a Caddyfile that may work depending on your configuration
+
+**Front-end**
+
+```
+https://fifos.nicolanapa.duckdns.org {
+        reverse_proxy localhost:5173
+        file_server
+        encode zstd gzip
+
+        # this might be needed when a subdomain doesn't get resolved
+        tls {
+                resolvers 1.1.1.1
+        }
+
+        # ... other things
+}
+```
+
+**API**
+
+```
+https://api.fifos.nicolanapa.duckdns.org {
+        reverse_proxy localhost:3000
+        file_server
+        encode zstd gzip
+
+        # this might be needed when a subdomain doesn't get resolved
+        tls {
+                resolvers 1.1.1.1
+        }
+
+        # ... other things
+}
+```
+
 ## Requirements or suggested versions
 
 You need to have both Node.js and npm installed for the building part (front-end) and running of the API
@@ -111,4 +165,8 @@ You can find Errors and logs (only Errors are shown and supported for the moment
 ## Errors
 
 If PostgreSQL is not accepting the connection / permission denied then make sure you've opened and allowed its port in the Firewall and config file
+<br><br>
+CORS Errors? It won't work if you try to connect to the Server through the front-end when both or one of them is only connected through HTTP (HTTPS must be enabled and working for the front-end to work correctly).
 <br>
+Try setting a SSL Certificate (feature not implemented yet) or Reverse Proxy with a HTTP Server like Caddy or similar
+<br><br>
