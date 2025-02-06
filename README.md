@@ -32,7 +32,7 @@ WRITE_ERROR_TO_FILE=true
 CORS_ORIGIN="<'http://localhost:5173'>"
 ```
 
-Create the two DB, _fifos_private_ and _fifos_public_ (though you can name them however you want) and run `npm run startDb` in **fifo-social-api**
+Create the two DB, _fifos_private_ and _fifos_public_ (though you can name them however you want), and run `npm run startDb` in **fifo-social-api**
 <br>
 Don't forget to `npm install` in both repos!
 
