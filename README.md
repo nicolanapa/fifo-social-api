@@ -2,11 +2,15 @@
 
 lorem
 
-<!-- Mention as a showcase of the Project: fifos.nicolanapa.duckdns.org and api.fifos.nicolanapa.duckdns.org -->
+**If you want to see a preview / how it works, you can see it hosted at [fifos.nicolanapa.duckdns.org](https://fifos.nicolanapa.duckdns.org) (Front-end) and [api.fifos.nicolanapa.duckdns.org](https://api.fifos.nicolanapa.duckdns.org) (API).**
 
 ## Features
 
 ipsum
+
+## API Routers and Paths
+
+dolor
 
 # How to run the API and Front-end
 
@@ -118,7 +122,12 @@ Here's as an example of a Caddyfile that may work depending on your configuratio
 
 ```
 https://fifos.nicolanapa.duckdns.org {
+        # When testing out with the dev's environment
         reverse_proxy localhost:5173
+        # After having built with npm
+        root * /fifo-social-frontend/dist/
+        try_files {path} /index.html
+
         file_server
         encode zstd gzip
 
