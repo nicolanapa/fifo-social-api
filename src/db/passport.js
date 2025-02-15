@@ -10,7 +10,7 @@ const customFields = {
 
 passport.use(
     new LocalStrategy(customFields, async (username, password, done) => {
-        console.log(username, password);
+        //console.log(username, password);
 
         const { rows } = await privateTable.query(
             "SELECT * FROM user_password WHERE username = $1",
