@@ -1,7 +1,9 @@
 # What is this?
 
-lorem
-
+This is the API repo of FiFoS (First in First out Social) and it's almost a feature complete Social with the following [features](#features).
+<br>
+This API checks and controls all the needed queries (e.g. level of permission of an User) and uses two PostgreSQL DBs,fifos-public (everything which should be publicly available) and fifos-private (used to keep safely all Users encrypted passwords (argon2id)).
+<br>
 **If you want to see a preview / how it works, you can see it hosted at [fifos.nicolanapa.duckdns.org](https://fifos.nicolanapa.duckdns.org) (Front-end) and [api.fifos.nicolanapa.duckdns.org](https://api.fifos.nicolanapa.duckdns.org) (API).**
 
 ## Features
@@ -16,6 +18,7 @@ lorem
 -   Followers and Followed
 -   You can favorite any Post / Comment and save it
 -   Search for anything / posts / users
+-   User sessions are stored through cookies in the `user_session` table
     <br>
     <br>
 -   Editable
