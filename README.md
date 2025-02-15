@@ -5,6 +5,9 @@ This is the API repo of FiFoS (First in First out Social) and it's almost a feat
 This API checks and controls all the needed queries (e.g. level of permission of an User) and uses two PostgreSQL DBs, fifos-public (everything which should be publicly available) and fifos-private (used to keep safely all Users encrypted passwords (argon2id)).
 <br>
 <br>
+**Here's the [Front-end](https://github.com/nicolanapa/fifo-social-frontend) repo**
+<br>
+<br>
 **If you want to see a preview / how it works, you can see it hosted at [fifos.nicolanapa.duckdns.org](https://fifos.nicolanapa.duckdns.org) (Front-end) and [api.fifos.nicolanapa.duckdns.org](https://api.fifos.nicolanapa.duckdns.org) (API).**
 
 ## Features
