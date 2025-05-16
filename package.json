@@ -14,12 +14,12 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@eslint/eslintrc": "^3.2.0",
+        "@eslint/eslintrc": "^3.3.1",
         "@eslint/js": "^9.14.0",
-        "@types/node": "^22.10.10",
-        "eslint": "^9.19.0",
+        "@types/node": "^22.15.18",
+        "eslint": "^9.26.0",
         "eslint-config-prettier": "^9.1.0",
-        "globals": "^15.14.0",
+        "globals": "^15.15.0",
         "prettier": "3.2.5",
         "prettier-plugin-ejs": "^1.0.3"
     },
@@ -27,11 +27,11 @@
         "argon2": "^0.41.1",
         "connect-pg-simple": "^10.0.0",
         "cors": "^2.8.5",
-        "express": "^5.0.1",
+        "express": "^5.1.0",
         "express-session": "^1.18.1",
         "express-validator": "^7.2.1",
         "passport": "^0.7.0",
         "passport-local": "^1.0.0",
-        "pg": "^8.13.1"
+        "pg": "^8.16.0"
     }
 }
